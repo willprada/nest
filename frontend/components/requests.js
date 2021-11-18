@@ -2,7 +2,7 @@ import axios from 'axios';
 
  const req = {
   getWebsiteByURL(url) {    
-    return axios.get('localhost:4000/websites/?url='+url);
+    return axios.get('localhost:8000/websites/'+url);
   },  
   
   getWebsiteById (id) {

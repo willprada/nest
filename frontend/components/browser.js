@@ -25,7 +25,8 @@ const Browser = (state) => {
     let isValidURL = regex.test(state.currentURL);
 
     if (isValidURL) {
-      req.getWebsiteByURL(state.currentURL);
+      let res = req.getWebsiteByURL(state.currentURL);
+      console.log(res);
     }
   };
 
@@ -39,9 +40,7 @@ const Browser = (state) => {
             src="/images/googlelogo.png"
             layout="fixed"
           />
-        </figure>
-        <h1>{JSON.stringify(state.referrals)} - "aca hay algo"</h1>
-        <h1>{JSON.stringify(state.referrers)} - "aca hay refs"</h1>
+        </figure>        
 
         <div className="field">
           <input

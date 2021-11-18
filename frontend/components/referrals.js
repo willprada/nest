@@ -13,11 +13,10 @@ const Referrals = ({referrers, referrals}) => {
   return (
     <div className="block">
       {tags.map((tag, i) => (
-        <span key={i} className={`tag ${colors[i % colors.length]}`}>
+        <span key={i} className={`tag ${colors[i % colors.length]} is-size-4`}>
           {tag}
         </span>
-      ))}
-      <button onClick={algo}>klasdjklfs</button>
+      ))}      
     </div>
   );
 };

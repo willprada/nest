@@ -3,8 +3,8 @@ import {createWrapper} from 'next-redux-wrapper';
 
 const initialState = {    
     currentURL: "",
-    referrers: ["pag1", "pag2", "pag3"],
-    referrals: ["www.google.com", "www.amazon.com"],
+    referrers: [],
+    referrals: [],
 }
 
 const reducer = (state = initialState, action) => {
