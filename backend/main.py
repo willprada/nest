@@ -24,6 +24,12 @@ def read_websites(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
     return crud.get_websites(db, skip, limit)
 
 
+@app.get("/websites/{website_url}", response_model=List[schemas.Website])
+def read_websites(website_url: str, db: Session = Depends(get_db)):
+    print(website_url)
+    return crud.get_website_by_url(db, website_url)
+
+
 @app.get("/websites/{website_id}/", response_model=schemas.Website)
 def read_website(website_id: int, db: Session = Depends(get_db)):
     db_website = crud.get_website(db, id=website_id)
