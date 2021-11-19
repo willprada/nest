@@ -8,6 +8,7 @@ const Browser = (state) => {
   const descText =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas dolorante, maximus nec rhoncus ac, molestie ut ipsum. Duis aliquet elit ipsum, sit amet gravida est tincidunt et. Phasellus bibendum pulvinar nulla, vitae facilisis quam sagittis nec. Proin iaculis erat at tortor convallis, ac hendrerit lorem lacinia. Vestibulum mattis posuere tellus id fringilla. Aliquam quis ultricies ex. Praesent volutpat sapien a suscipit pellentesque. Praesent ultrices lobortis nulla in semper. Nunc id tincidunt sem. In hac habitasse platea dictumst. Vestibulum quis ex venenatis, pharetra purus et, ornare erat";
   // const [searchURL, setSearchURL] = useState("");
+  const [isHidden, setVisibility] = useState("is-hidden");
   const [referrer, setReferrers] = useState("");
   const [description, setDescription] = useState(descText);
 
@@ -17,7 +18,11 @@ const Browser = (state) => {
   const setSearchURL = (evt) => {
     let searchURL = evt.target.value;        
     state.dispatch(setSearch(searchURL));
-  }  
+  }
+
+  const hideWarning = () => {
+    setVisibility("is-hidden");
+  }
 
   const start = () => {    
     let regex = /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._]{2,256}\.[a-z]{2,6}$/;    
@@ -26,6 +31,8 @@ const Browser = (state) => {
     if (isValidURL) {
       let res = req.getWebsiteByURL(state.currentURL);
       res.then(resp => { handleResponse(resp) });
+    } else {
+      setVisibility("");
     }
   };
 
@@ -53,7 +60,7 @@ const Browser = (state) => {
           />
         </figure>        
 
-        <div className="field">
+        <div className="field is-flex">
           <input
             id="website"
             name="website"
@@ -61,9 +68,15 @@ const Browser = (state) => {
             autoComplete="off"
             className="input"
             defaultValue={state.currentURL}
-            onBlur={setSearchURL}
+            onFocus={hideWarning}
+            onBlur={setSearchURL}            
           />
+          <span 
+            className={"has-tooltip-arrow has-tooltip-right has-tooltip-danger has-tooltip-active " + isHidden}
+            data-tooltip="Herror Kolozas¡l">
+          </span>  
         </div>
+    
 
         <div className="field">
           <div className="control">
