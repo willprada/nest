@@ -1,6 +1,7 @@
 from typing import List
 
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
@@ -8,7 +9,24 @@ from .database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
+
 app = FastAPI()
+
+
+origins = [
+    "localhost",
+    "localhost:4000",
+    "http://localhost",
+    "http://localhost:4000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],    
+)
 
 
 def get_db():
@@ -24,9 +42,8 @@ def read_websites(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
     return crud.get_websites(db, skip, limit)
 
 
-@app.get("/websites/{website_url}", response_model=List[schemas.Website])
-def read_websites(website_url: str, db: Session = Depends(get_db)):
-    print(website_url)
+@app.get("/websites/{website_url}", response_model=schemas.Website)
+def read_websites(website_url: str, db: Session = Depends(get_db)):    
     return crud.get_website_by_url(db, website_url)
 
 

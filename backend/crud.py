@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 
 
-def get_website_by_url(db: Session, url: str):    
+def get_website_by_url(db: Session, url: str):
     return db.query(models.Website).filter(models.Website.url == url).first()
 
 

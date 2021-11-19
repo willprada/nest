@@ -11,8 +11,7 @@ const Browser = (state) => {
   const [referrer, setReferrers] = useState("");
   const [description, setDescription] = useState(descText);
 
-  useEffect(() => {
-    console.log(state);
+  useEffect(() => {    
   }, []);
 
   const setSearchURL = (evt) => {
@@ -26,7 +25,19 @@ const Browser = (state) => {
 
     if (isValidURL) {
       let res = req.getWebsiteByURL(state.currentURL);
-      console.log(res);
+      res.then(resp => { handleResponse(resp) });
+    }
+  };
+
+  const scrapWebsite = () => {
+    console.log('Time to do some scraping');
+  }
+
+  const handleResponse = (resp) => {
+    if (resp.data) {
+      setDescription(resp.data.description);
+    } else {
+      scrapWebsite();
     }
   };
 
